@@ -6,9 +6,10 @@ class Solution {
             else if(ch == '{') st.push('}') ;
             else if(ch == '[') st.push(']') ;
             else{
-                if(st.isEmpty() || ch != st.pop()) return false ;
+                if(!st.isEmpty() && st.pop() == ch) continue ;
+                else return false ;
             }
         }
-        return st.isEmpty() ;
+        return st.isEmpty() ? true : false ;
     }
 }

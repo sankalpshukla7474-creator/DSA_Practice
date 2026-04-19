@@ -19,7 +19,7 @@ class Solution {
         return make(nums,0,nums.length-1) ;
     }
     public TreeNode make(int[] nums, int i , int j){
-        if(i < 0 || j < 0 || i >= nums.length || j >= nums.length || j < i ) return null ;
+        if(j < i ) return null ;
         int mid = i + (j - i ) / 2 ;
         if(i == mid && j == mid) return new TreeNode(nums[mid]) ;
         TreeNode root = new TreeNode(nums[mid]) ;

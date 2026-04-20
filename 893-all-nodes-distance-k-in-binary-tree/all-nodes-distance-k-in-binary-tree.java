@@ -1,20 +1,20 @@
 class Solution {
-    HashMap<TreeNode, TreeNode> hm = new HashMap<>();
     TreeNode ptr = null;
     TreeNode tar = null;
+    Map<TreeNode, TreeNode> hm = new HashMap<>();
 
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
         List<Integer> ls = new ArrayList<>();
         if (root == null) return ls;
 
-        tar = target;                 // missing in your code
+        tar = target;
         dfs(root, null);
 
-        Set<TreeNode> st = new HashSet<>();
         Queue<TreeNode> q = new LinkedList<>();
+        Set<TreeNode> st = new HashSet<>();
 
         q.offer(ptr);
-        st.add(ptr);
+        st.add(ptr);   // missing
 
         while (!q.isEmpty()) {
             int size = q.size();

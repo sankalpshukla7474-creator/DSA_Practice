@@ -1,28 +1,29 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> hm = new HashMap<>();
-        for (int x : nums) {
-            hm.put(x, hm.getOrDefault(x, 0) + 1);
+        PriorityQueue<Pair> pq = new PriorityQueue<>((p,q)->q.val-p.val) ;
+        HashMap<Integer,Integer> hm = new HashMap<>() ;
+        for(int x : nums){
+            hm.put(x,hm.getOrDefault(x,0)+1) ;
         }
-        List<Integer>[] bucket = new List[nums.length+1];
-        for (int key : hm.keySet()) {
-            int fre = hm.get(key);
-            if (bucket[fre] == null) {
-                bucket[fre] = new ArrayList<>();
-            }
-            bucket[fre].add(key);
+        for(int a : hm.keySet()){
+            Pair p = new Pair(a,hm.get(a)) ;
+            pq.offer(p) ;
         }
-        int[] arr = new int[k];
-        int idx = 0;
-        for (int i = bucket.length - 1; i >= 0 && idx < k; i--) {
-            if (bucket[i] != null) {
-                for (int num : bucket[i]) {
-                    arr[idx++] = num;
-                    if (idx == k)
-                        break;
-                }
-            }
+        int[] arr = new int[k] ;
+        int i = 0 ;
+        while(i < k){
+            Pair u = pq.poll() ;
+            arr[i] = u.num ;
+            i++ ;
         }
-        return arr;
+        return arr ;
+    }
+    class Pair{
+        int num ;
+        int val ;
+        Pair(int num , int val){
+            this.num = num ;
+            this.val = val ;
+        }
     }
 }

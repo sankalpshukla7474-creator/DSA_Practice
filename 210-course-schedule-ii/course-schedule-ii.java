@@ -29,25 +29,6 @@ class Solution {
             }
         }
         if(pb.size() != num) return new int[0] ;
-        int[] arr = new int[num] ;
-        for(int i = 0 ; i < num ; i++){
-            if(!visit[i]){
-                dfs(i,visit) ;
-            }
-        }
-        Collections.reverse(ls) ;
-        for(int i = 0 ; i < num ; i++){
-            arr[i] = ls.get(i) ;
-        }
-        return arr ;
-    }
-    public void dfs(int u , boolean[] visit){
-        visit[u] = true ;
-        for(int v : adj.get(u)){
-            if(!visit[v]){
-                dfs(v,visit) ;
-            }
-        }
-        ls.add(u) ;
+        return pb.stream().mapToInt(i -> i).toArray();
     }
 }

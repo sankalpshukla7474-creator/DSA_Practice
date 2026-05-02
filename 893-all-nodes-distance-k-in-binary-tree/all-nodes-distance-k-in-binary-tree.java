@@ -1,72 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 class Solution {
-    TreeNode ptr = null;
-    TreeNode tar = null;
-    Map<TreeNode, TreeNode> hm = new HashMap<>();
-
+    TreeNode ptr = null ;
+    List<Integer> ls = new ArrayList<>() ;
+    HashMap<TreeNode,TreeNode> hm = new HashMap<>() ;
     public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
-        List<Integer> ls = new ArrayList<>();
-        if (root == null) return ls;
-
-        tar = target;
-        dfs(root, null);
-
-        Queue<TreeNode> q = new LinkedList<>();
-        Set<TreeNode> st = new HashSet<>();
-
-        q.offer(ptr);
-        st.add(ptr);   // missing
-
-        while (!q.isEmpty()) {
-            int size = q.size();
-
-            if (k == 0) {
-                for (TreeNode node : q) {
-                    ls.add(node.val);
+        if(root == null) return ls ;
+        dfs(root,target) ;
+        Set<TreeNode> st = new HashSet<>() ;
+        Queue<TreeNode> q = new LinkedList<>() ;
+        q.offer(ptr) ;
+        st.add(ptr) ;
+        while(k-- > 0){
+            int size = q.size() ;
+            for(int i = 0 ; i < size ; i++){
+                TreeNode temp = q.poll() ;
+                if(hm.containsKey(temp) && !st.contains(hm.get(temp))){
+                    q.offer(hm.get(temp)) ;
+                    st.add(hm.get(temp)) ;
                 }
-                return ls;
-            }
-
-            for (int i = 0; i < size; i++) {
-                TreeNode node = q.poll();
-
-                if (hm.containsKey(node) && !st.contains(hm.get(node))) {
-                    q.offer(hm.get(node));
-                    st.add(hm.get(node));
+                if(temp.left != null && !st.contains(temp.left)){
+                    q.offer(temp.left) ;
+                    st.add(temp.left) ;
                 }
-
-                if (node.left != null && !st.contains(node.left)) {
-                    q.offer(node.left);
-                    st.add(node.left);
-                }
-
-                if (node.right != null && !st.contains(node.right)) {
-                    q.offer(node.right);
-                    st.add(node.right);
+                if(temp.right != null && !st.contains(temp.right)){
+                    q.offer(temp.right) ;
+                    st.add(temp.right) ;
                 }
             }
-
-            k--;
         }
-
-        return ls;
+        while(!q.isEmpty()){
+            TreeNode temp = q.poll() ;
+            ls.add(temp.val) ;
+        }
+        return ls ;
     }
-
-    public void dfs(TreeNode root, TreeNode par) {
-        if (root == null) return;
-
-        if (root == tar) {
-            ptr = root;
+    public void dfs(TreeNode root , TreeNode tar){
+        if(root == null) return ;
+        if(root == tar){
+            ptr = root ;
         }
-
-        if (root.left != null) {
-            hm.put(root.left, root);
+        if(root.left != null){
+            hm.put(root.left,root) ;
+            dfs(root.left,tar) ;
         }
-
-        if (root.right != null) {
-            hm.put(root.right, root);
+        if(root.right != null){
+            hm.put(root.right,root) ;
+            dfs(root.right,tar) ;
         }
-
-        dfs(root.left, root);
-        dfs(root.right, root);
     }
 }

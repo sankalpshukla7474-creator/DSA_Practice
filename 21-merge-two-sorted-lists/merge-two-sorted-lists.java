@@ -9,32 +9,34 @@
  * }
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode a = list1 ;
-        ListNode b = list2 ;
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null && l2 != null) return l2 ;
+        if(l1 != null && l2 == null) return l1 ;
+        if(l1 == null && l2 == null) return null ;
         ListNode dum = new ListNode(-1) ;
-        ListNode curr = dum ;
-        while(a != null && b != null){
-            if(a.val <= b.val){
-                curr.next = a ;
-                a = a.next ;
-                curr = curr.next ;
+        ListNode ptr = dum ;
+        ListNode p = l1 ;
+        ListNode q = l2 ;
+        while(p != null && q != null){
+            if(p.val <= q.val){
+                ptr.next = p ;
+                p = p.next ;
             }
             else{
-                curr.next = b ; 
-                b = b.next ;
-                curr = curr.next ;
+                ptr.next = q ;
+                q = q.next ;
             }
+            ptr = ptr.next ;
         }
-        while(a != null){
-            curr.next = a ;
-            a = a.next ;
-            curr = curr.next ;
+        while(p != null){
+            ptr.next = p ;
+            p = p.next ;
+            ptr = ptr.next ;
         }
-        while(b != null){
-            curr.next = b ;
-            b = b.next ;
-            curr = curr.next ;
+        while(q != null){
+            ptr.next = q ;
+            q = q.next ;
+            ptr = ptr.next ;
         }
         return dum.next ;
     }

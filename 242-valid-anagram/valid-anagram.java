@@ -1,17 +1,13 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
-        int[] fre = new int[26] ;
+        Map<Character,Integer> hm1 = new HashMap<>() ;
+        Map<Character,Integer> hm2 = new HashMap<>() ;
         for(char ch : s.toCharArray()){
-            fre[ch-'a']++ ;
+            hm1.put(ch,hm1.getOrDefault(ch,0)+1) ;
         }
         for(char ch : t.toCharArray()){
-            fre[ch-'a']-- ;
+            hm2.put(ch,hm2.getOrDefault(ch,0)+1) ;
         }
-        for(int i = 0 ; i < 26 ; i++){
-            if(fre[i] != 0){
-                return false ;
-            }
-        }
-        return true ;
+        return hm1.equals(hm2) ;
     }
 }

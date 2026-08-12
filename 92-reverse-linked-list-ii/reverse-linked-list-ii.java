@@ -10,43 +10,41 @@
  */
 class Solution {
     public ListNode reverseBetween(ListNode head, int left, int right) {
-        if(left == right) return head ;
-        ListNode dum = new ListNode(-1);
-        dum.next = head;
-        ListNode p = dum;
-        ListNode q = dum;
-        while (left > 0) {
-            p = p.next;
-            left--;
+        if(head == null || head.next == null) return head ;
+        ListNode dum = new ListNode(-1) ;
+        dum.next = head ;
+        ListNode ptr1 = dum , ptr2 = dum ;
+        while(left != 0 || right != 0){
+            if(left != 0){
+                ptr1 = ptr1.next ;
+                left-- ;
+            }
+            if(right != 0){
+                ptr2 = ptr2.next ;
+                right-- ;
+            }
         }
-        while (right > 0) {
-            q = q.next;
-            right--;
+        ListNode start = dum ;
+        while(start.next != ptr1){
+            start = start.next ;
         }
-        ListNode r = dum ;
-        while(r.next != p){
-            r = r.next ;
+        ListNode end = ptr2.next ;
+        ptr2.next = null ;
+        ListNode joint = reverse(ptr1) ;
+        start.next = joint ;
+        while(joint.next != null){
+            joint = joint.next ;
         }
-        r.next = null ;
-        ListNode s = q.next ;
-        q.next = null ;
-        ListNode c = reverse(p) ;
-        r.next = c ;
-        ListNode ptr = dum ;
-        while(ptr.next != null){
-            ptr = ptr.next ;
-        }
-        ptr.next = s ;
+        joint.next = end ;
         return dum.next ;
     }
-    public ListNode reverse(ListNode head){
+    public ListNode reverse(ListNode ptr){
         ListNode prev = null ;
-        ListNode curr = head ;
-        while(curr != null){
-            ListNode nxt = curr.next ;
-            curr.next = prev ;
-            prev = curr ;
-            curr = nxt ;
+        while(ptr != null){
+            ListNode nxt = ptr.next ;
+            ptr.next = prev ;
+            prev = ptr ;
+            ptr = nxt ;
         }
         return prev ;
     }
